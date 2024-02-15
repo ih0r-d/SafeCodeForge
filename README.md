@@ -1,6 +1,6 @@
 # SafeCodeForge
 
-![GitHub](https://img.shields.io/github/license/ih0r-d/safecodeforge)
+![GitHub](https://img.shields.io/github/license/ih0r-d/safecodeforge?style=flat-square)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ih0r-d/safecodeforge)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ih0r-d/safecodeforge)
 
