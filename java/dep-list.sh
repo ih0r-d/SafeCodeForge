@@ -3,17 +3,9 @@
 set -e
 set -u
 
-# apply variables from another file
-source ../../scripts/utils.sh >/dev/null
-
-SEPARTAOR_LINE='------------------------------------------------------------------------'
-TARGET_DIR='target/deps'
-
-
-function dependency_list(){
-  local pom_file_path="${1:-.}"
-  local output_file_path="${2:-${TARGET_DIR}/list.csv}"
-
+mvn_dependency_list(){
+  local pom_file_path="$1"
+  local output_file_path="$2"
 
   # Check if TARGET_DIR exists, if not, create it
   if [ ! -d "${TARGET_DIR}" ]; then
@@ -33,10 +25,6 @@ function dependency_list(){
 
   log "INFO" "${SEPARTAOR_LINE}"
   log "INFO" "ANALYSIS COMPLETED"
-  log "INFO" "${SEPARTAOR_LINE}"
+  log "INFO" ""
   log "INFO" "Output fite:\t${output_file_path}"
 }
-
-dependency_list "$1" "$2"
-measure_time_in_sec dependency_list
-log "INFO" "${SEPARTAOR_LINE}"
