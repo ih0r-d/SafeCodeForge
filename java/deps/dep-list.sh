@@ -3,7 +3,10 @@
 set -e
 set -u
 
+# apply variables from another file
+source ../../scripts/utils.sh >/dev/null
 
+SEPARTAOR_LINE='------------------------------------------------------------------------'
 TARGET_DIR='target/deps'
 
 
@@ -28,8 +31,12 @@ function dependency_list(){
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
   sort -u > "$output_file_path"
 
-
-  echo "Analysis completed. Results saved to: ${output_file_path}"
+  log "INFO" "${SEPARTAOR_LINE}"
+  log "INFO" "ANALYSIS COMPLETED"
+  log "INFO" "${SEPARTAOR_LINE}"
+  log "INFO" "Output fite:\t${output_file_path}"
 }
 
-dependency_list
+dependency_list "$1" "$2"
+measure_time_in_sec dependency_list
+log "INFO" "${SEPARTAOR_LINE}"

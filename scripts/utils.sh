@@ -32,7 +32,7 @@ log() {
             ;;
     esac
 
-    output="[$color$log_level$RESET]\t---\t${GREEN}$message$RESET"
+    output="[$color$log_level$RESET]\t${GREEN}$message$RESET"
     printf "%b\n" "$output"
 }
 
@@ -40,6 +40,6 @@ log() {
 function measure_time_in_sec() {
   local func_name=$1
   real_time=$( { time $func_name; } 2>&1 | grep real | awk '{print $2}' )
-  real_time_seconds=$(echo "$real_time" | awk -F'm|s' '{print ($1 * 60) + $2}')
-  log "INFO" "Total time of ${func_name} function: ${real_time_seconds} s"
+#  real_time_seconds=$(echo "$real_time" | awk -F'm|s' '{print ($1 * 60) + $2}')
+  log "INFO" "Total time:\t${real_time}"
 }
