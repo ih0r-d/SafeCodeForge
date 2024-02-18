@@ -23,8 +23,10 @@ mvn_dependency_list(){
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
   sort -u > "$output_file_path"
 
-  log "INFO" "${SEPARTAOR_LINE}"
-  log "INFO" "ANALYSIS COMPLETED"
-  log "INFO" ""
-  log "INFO" "Output fite:\t${output_file_path}"
+  analisys_log $output_file_path
+  
+}
+
+mvn_dependency_update(){
+  mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates"${MVN_P_OPTS}" | tee "$TARGET_FILE"
 }

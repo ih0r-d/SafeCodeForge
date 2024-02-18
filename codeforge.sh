@@ -4,7 +4,7 @@
 source ./scripts/utils.sh >/dev/null
 
 # apply deps functions
-source ./java/dep-list.sh >/dev/null
+source ./java/dependencies.sh >/dev/null
 
 # apply variables functions
 source ./vars/variables.sh >/dev/null
@@ -40,7 +40,7 @@ case $COMMAND in
       display_help
       ;;
     *)
-      log "ERROR" "${NO_MODE_MSG}"
+      log "ERROR" "${UNKNOWN_MSG}"
       display_help
       exit 1  # Exit the script with a non-zero status code to indicate an error
       ;;
