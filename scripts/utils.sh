@@ -62,27 +62,16 @@ analisys_log(){
 
 # Function to display help information for the CLI application
 display_help() {
-    # ANSI color codes
-    RED='\033[0;31m'
-    GREEN='\033[0;32m'
-    YELLOW='\033[0;33m'
-    BLUE='\033[0;34m'
-    MAGENTA='\033[0;35m'
-    CYAN='\033[0;36m'
-    BOLD='\033[1m'
-    RESET='\033[0m'
-
     printf "${BOLD}Usage:${RESET} ${GREEN}$0${RESET} ${BLUE}[command] [options]${RESET}\n\n"
-    printf "${BOLD}Description:${RESET}\n  ${YELLOW}[Brief description of what the CLI application does.]${RESET}\n\n"
     printf "${BOLD}Commands:${RESET}\n"
-    printf "  ${CYAN}command1${RESET}         ${MAGENTA}[Description of command1]${RESET}\n"
-    printf "  ${CYAN}command2${RESET}         ${MAGENTA}[Description of command2]${RESET}\n"
-    printf "  ...\n\n"
-    printf "${BOLD}Options:${RESET}\n"
-    printf "  ${GREEN}-h, --help${RESET}       ${BLUE}Show help information${RESET}\n"
-    printf "  ${GREEN}-v, --version${RESET}    ${BLUE}Show version information${RESET}\n"
-    printf "  ...\n\n"
-    printf "${BOLD}Examples:${RESET}\n"
-    printf "  ${MAGENTA}[Example usages of the CLI application and its commands]${RESET}\n\n"
-    printf "For more information, visit ${CYAN}[URL for additional documentation]${RESET}.\n"
+    printf "\t${CYAN}analyze <option>${RESET}\t${MAGENTA}[Analyze maven dependencies]${RESET}\n"
+    printf "\t${CYAN}${BOLD}Options:${RESET}\t${RESET}\n"
+    printf "\t\t${GREEN}mvn-dep-list${GREEN}\t${MAGENTA}[Get and save to csv file list of dependencies]${RESET}\n\n"
+    printf "\t${CYAN}scan <tool>${RESET}\t\t${MAGENTA}[Scan for vulnerabilities using the specified tool]${RESET}\n"
+    printf "\t${CYAN}${BOLD}Options:${RESET}\t\t${RESET}\n"
+    printf "\t\t${GREEN}snyk${GREEN}\t\t${MAGENTA}[Use Snyk for vulnerability scanning]${RESET}\n"
+    printf "\t\t${GREEN}owasp${GREEN}\t\t${MAGENTA}[Use OWASP Dependency-Check for vulnerability scanning]${RESET}\n"
+    printf "\t\t${GREEN}blackduck${GREEN}\t${MAGENTA}[Use Black Duck for vulnerability scanning]${RESET}\n\n"
+
+    exit 1
 }
