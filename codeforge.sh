@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # apply common functions
-source ./scripts/utils.sh >/dev/null
+source $(pwd)/scripts/utils.sh >/dev/null
 
 # apply deps functions
-source ./java/dependencies.sh >/dev/null
+source $(pwd)/scripts/java_deps.sh >/dev/null
 
 # apply variables functions
-source ./vars/variables.sh >/dev/null
+source $(pwd)/scripts/variables.sh >/dev/null
 
 
 # Parse command line arguments

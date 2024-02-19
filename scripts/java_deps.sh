@@ -3,9 +3,14 @@
 set -e
 set -u
 
+
+# apply common functions
+source $(pwd)/scripts/utils.sh >/dev/null
+
+
 mvn_dependency_list(){
-  local pom_file_path="$1"
-  local output_file_path="$2"
+  local pom_file_path="${1:-''}"
+  local output_file_path="${2:-''}"
 
   chmod 700 ./java/mvnw
 
@@ -14,10 +19,16 @@ mvn_dependency_list(){
       mkdir -p "${TARGET_DIR}"
   fi
 
-  if [ -z "$pom_file_path" ]; then  # Check if the variable is unset or empty
-      echo "Error: Variable 'pom_file_path' must be defined." >&2  # Output error message to stderr
+  if [[ -z "$pom_file_path" ]]; then  # Check if the variable is unset or empty
+      log "ERROR" "Variable 'POM_FILE_PATH' must be defined."
       exit 1  # Exit the function with an error status
   fi
+
+  if [ -z "$output_file_path" ]; then  # Check if the variable is unset or empty
+      log "ERROR" "Variable 'OUTPUT_DEPS_FILE_NAME' must be defined."
+      exit 1  # Exit the function with an error status
+  fi
+
 
   ./java/mvnw -o dependency:list -f "${pom_file_path}/pom.xml" | \
   grep ":.*:.*:compile" | \
@@ -25,7 +36,7 @@ mvn_dependency_list(){
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
   sort -u > "$output_file_path"
 
-  analisys_log $output_file_path
+  analisys_log $(pwd)/$output_file_path
   
 }
 

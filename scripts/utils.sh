@@ -50,7 +50,6 @@ measure_time_in_sec() {
   real_time=$({ time $func_name; } 2>&1 | grep real | awk '{print $2}')
   real_time_seconds=$(echo "$real_time" | awk -F'm|s' '{print ($1 * 60) + $2}')
   log "INFO" "Total time: $real_time"
-
 }
 
 analisys_log(){
@@ -87,6 +86,3 @@ display_help() {
     printf "  ${MAGENTA}[Example usages of the CLI application and its commands]${RESET}\n\n"
     printf "For more information, visit ${CYAN}[URL for additional documentation]${RESET}.\n"
 }
-
-# Example usage of the help function
-display_help
