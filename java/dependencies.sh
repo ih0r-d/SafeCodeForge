@@ -7,6 +7,8 @@ mvn_dependency_list(){
   local pom_file_path="$1"
   local output_file_path="$2"
 
+  chmod 700 ./java/mvnw
+
   # Check if TARGET_DIR exists, if not, create it
   if [ ! -d "${TARGET_DIR}" ]; then
       mkdir -p "${TARGET_DIR}"
@@ -17,7 +19,7 @@ mvn_dependency_list(){
       exit 1  # Exit the function with an error status
   fi
 
-  mvn -o dependency:list -f "${pom_file_path}/pom.xml" | \
+  ./java/mvnw -o dependency:list -f "${pom_file_path}/pom.xml" | \
   grep ":.*:.*:compile" | \
   sed -e "s/\[INFO\]    \([^:]*\):\([^:]*\):jar:\([^:]*\):compile/\1;\2;\3/" -e "s/ -- /;/" | \
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
@@ -28,5 +30,5 @@ mvn_dependency_list(){
 }
 
 mvn_dependency_update(){
-  mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates"${MVN_P_OPTS}" | tee "$TARGET_FILE"
+  ./java/mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates"${MVN_P_OPTS}" | tee "$TARGET_FILE"
 }
