@@ -8,7 +8,7 @@ set -u
 source $(pwd)/scripts/utils.sh >/dev/null
 
 
-mvn_dependency_list(){
+analyze_mvn_dep_list(){
   local pom_file_path="${1:-''}"
   local output_file_path="${2:-''}"
 
@@ -40,6 +40,6 @@ mvn_dependency_list(){
   
 }
 
-mvn_dependency_update(){
+analyze_mvn_dep_update(){
   ./java/mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates"${MVN_P_OPTS}" | tee "$TARGET_FILE"
 }

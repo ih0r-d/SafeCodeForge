@@ -6,42 +6,75 @@ source $(pwd)/scripts/utils.sh >/dev/null
 # apply deps functions
 source $(pwd)/scripts/java_deps.sh >/dev/null
 
+# apply tools functions
+source $(pwd)/scripts/scan_tools.sh >/dev/null
+
 # apply variables functions
 source $(pwd)/scripts/variables.sh >/dev/null
 
+# Handle analyze command
+analyze_command() {
+    local option="$1"
 
-# Parse command line arguments
-while [[ $# -gt 0 ]]
-do
-key="$1"
+    case "$option" in
+        mvn-dep-list)
+            analyze_mvn_dep_list
+            ;;
+        *)
+            echo "Invalid option: $option"
+            display_help
+            ;;
+    esac
+}
 
-case $key in
-    --command|-c)
-    COMMAND="$2"
-    shift # past argument
-    shift # past value
-    ;;
-    *)
-    # unknown option
-    log "ERROR" "${UNKNOWN_MSG} $key"
-    shift # past argument
-    exit 1  # Exit the script with a non-zero status code to indicate an error
-    ;;
-esac
-done
+# Handle scan command
+scan_command() {
+    local tool="$1"
 
-# Check the value of the mode variable
-case $COMMAND in
-    mvn-dep-list)
-      mvn_dependency_list "$POM_FILE_PATH" "$OUTPUT_DEPS_FILE_PATH"
-      log "INFO" "${SEPARTAOR_LINE}"
-      ;;
-    help)
-      display_help
-      ;;
-    *)
-      log "ERROR" "${UNKNOWN_MSG}"
-      display_help
-      exit 1  # Exit the script with a non-zero status code to indicate an error
-      ;;
-esac
+    case "$tool" in
+        snyk)
+            scan_with_snyk
+            ;;
+        owasp)
+            scan_with_owasp
+            ;;
+        blackduck)
+            scan_with_blackduck
+            ;;
+        *)
+            echo "Invalid tool: $tool"
+            display_help
+            ;;
+    esac
+}
+
+
+# Main function to handle commands
+main() {
+    local command="$1"
+    shift
+
+    case "$command" in
+        --analyze|-a)
+            analyze_command "$@"
+            ;;
+        --scan|-s)
+            scan_command "$@"
+            ;;
+        --help|-h)
+            display_help "$@"
+            ;;
+        *)
+            log "ERROR" "$UNKNOWN_MSG $command"
+            display_help
+            ;;
+    esac
+}
+
+# Check if the correct number of arguments is provided
+if [ "$#" -lt 1 ]; then
+    display_help
+fi
+
+# Call the main function with provided arguments
+main "$@"

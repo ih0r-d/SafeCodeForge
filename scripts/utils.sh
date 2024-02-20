@@ -62,16 +62,23 @@ analisys_log(){
 
 # Function to display help information for the CLI application
 display_help() {
-    printf "${BOLD}Usage:${RESET} ${GREEN}$0${RESET} ${BLUE}[command] [options]${RESET}\n\n"
-    printf "${BOLD}Commands:${RESET}\n"
-    printf "\t${CYAN}analyze <option>${RESET}\t${MAGENTA}[Analyze maven dependencies]${RESET}\n"
-    printf "\t${CYAN}${BOLD}Options:${RESET}\t${RESET}\n"
-    printf "\t\t${GREEN}mvn-dep-list${GREEN}\t${MAGENTA}[Get and save to csv file list of dependencies]${RESET}\n\n"
-    printf "\t${CYAN}scan <tool>${RESET}\t\t${MAGENTA}[Scan for vulnerabilities using the specified tool]${RESET}\n"
-    printf "\t${CYAN}${BOLD}Options:${RESET}\t\t${RESET}\n"
-    printf "\t\t${GREEN}snyk${GREEN}\t\t${MAGENTA}[Use Snyk for vulnerability scanning]${RESET}\n"
-    printf "\t\t${GREEN}owasp${GREEN}\t\t${MAGENTA}[Use OWASP Dependency-Check for vulnerability scanning]${RESET}\n"
-    printf "\t\t${GREEN}blackduck${GREEN}\t${MAGENTA}[Use Black Duck for vulnerability scanning]${RESET}\n\n"
+    printf "%b\n" ""
+    printf "%b\n" "${BOLD}Usage:${RESET} ${GREEN}$0${RESET} ${BLUE}[command] [options]${RESET}"
+    printf "%b\n" "${BOLD}Commands:${RESET}"
+    printf "%b\n" ""
+    printf "%b\n" " ${CYAN}-a, --analyze <option>${RESET}\t\tAnalyze maven dependencies"
+    printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t"
+    printf "%b\n" "\t${GREEN}mvn-dep-list${GREEN}\t\t${RESET}Get and save to csv file list of dependencies"
+    printf "%b\n" ""
+    printf "%b\n" " ${CYAN}-s, --scan <tool>${RESET}\t\t${RESET}Scan for vulnerabilities using the specified tool"
+    printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t\t${RESET}"
+    printf "%b\n" "\t${GREEN}snyk${GREEN}\t\t\t${RESET}Use Snyk for vulnerability scanning"
+    printf "%b\n" "\t${GREEN}owasp${GREEN}\t\t\t${RESET}Use OWASP Dependency-Check for vulnerability scanning"
+    printf "%b\n" "\t${GREEN}blackduck${GREEN}\t\t${RESET}Use Black Duck for vulnerability scanning"
+    printf "%b\n" ""
+    printf "%b\n" "  ${CYAN}-h, --help${RESET}\t\t\tDisplay help"
+    printf "%b\n" ""
+    printf "%b\n" ""
 
     exit 1
 }
