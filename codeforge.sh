@@ -12,6 +12,10 @@ source $(pwd)/scripts/scan_tools.sh >/dev/null
 # apply variables functions
 source $(pwd)/scripts/variables.sh >/dev/null
 
+# apply func_complete functions
+source $(pwd)/scripts/func_complete.sh >/dev/null
+#
+
 # Handle analyze command
 analyze_command() {
     local option="$1"
