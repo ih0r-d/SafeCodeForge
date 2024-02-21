@@ -5,18 +5,18 @@ set -u
 
 
 # apply common functions
-source $(pwd)/scripts/utils.sh >/dev/null
+source "$(pwd)"/scripts/utils.sh >/dev/null
 
 
 analyze_mvn_dep_list(){
   local pom_file_path="${1:-''}"
   local output_file_path="${2:-''}"
 
-  chmod 700 ./java/mvnw
+  chmod_mvn_wrapper
 
   # Check if TARGET_DIR exists, if not, create it
-  if [ ! -d "${TARGET_DIR}" ]; then
-      mkdir -p "${TARGET_DIR}"
+  if [ ! -d "${output_file_path}" ]; then
+      mkdir -p "${output_file_path}"
   fi
 
   if [[ -z "$pom_file_path" ]]; then  # Check if the variable is unset or empty
@@ -29,17 +29,25 @@ analyze_mvn_dep_list(){
       exit 1  # Exit the function with an error status
   fi
 
+  file_name=$(build_file_name "dep_list" "csv")
 
   ./java/mvnw -o dependency:list -f "${pom_file_path}/pom.xml" | \
   grep ":.*:.*:compile" | \
   sed -e "s/\[INFO\]    \([^:]*\):\([^:]*\):jar:\([^:]*\):compile/\1;\2;\3/" -e "s/ -- /;/" | \
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
-  sort -u > "$output_file_path"
+  sort -u > "$output_file_path/$file_name"
 
-  analisys_log $(pwd)/$output_file_path
+  analisys_log "$(pwd)/$output_file_path/$file_name"
   
 }
 
 analyze_mvn_dep_update(){
-  ./java/mvn org.codehaus.mojo:versions-maven-plugin:display-dependency-updates"${MVN_P_OPTS}" | tee "$TARGET_FILE"
+  chmod_mvn_wrapper
+  local pom_file_path="${1:-''}"
+  local output_file_path="${2:-''}"
+
+  file_name=$(build_file_name "dep_updates" "txt")
+
+  ./java/mvnw -f "${pom_file_path}/pom.xml" org.codehaus.mojo:versions-maven-plugin:display-dependency-updates > "$output_file_path/$file_name"
+  analisys_log "$(pwd)/$output_file_path/$file_name"
 }

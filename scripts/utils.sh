@@ -10,15 +10,24 @@ BOLD='\e[1m'     # Bold text
 GREEN='\e[32m'   # Green text
 RESET='\e[0m'    # Reset text formatting
 BLUE='\033[0;34m'
-MAGENTA='\033[0;35m'
 CYAN='\033[0;36m'
 RESET='\033[0m'
 
 # application constants
 UNKNOWN_MSG="Unknown command:"
-SEPARTAOR_LINE="------------------------------------------------------------------------"
-TARGET_DIR="target/deps"
+SEPARATOR_LINE="------------------------------------------------------------------------"
 
+chmod_mvn_wrapper(){
+  chmod 700 ./java/mvnw
+}
+
+build_file_name(){
+  local prefix="${1:-'dep_'}"
+  local extension="${2:-'txt'}"
+  time_str=$(date +"%Y-%m-%d-%H-%M-%S")
+  file_name="${prefix}"_"${time_str}"."${extension}"
+  echo "${file_name}"
+}
 
 # Function to log messages with custom formatting
 log() {
@@ -54,7 +63,7 @@ measure_time_in_sec() {
 
 analisys_log(){
   local out_file_path=$1
-  log "INFO" "${SEPARTAOR_LINE}"
+  log "INFO" "${SEPARATOR_LINE}"
   log "INFO" "ANALYSIS COMPLETED"
   log "INFO" ""
   log "INFO" "Output fite:\t${out_file_path}"
@@ -69,6 +78,7 @@ display_help() {
     printf "%b\n" " ${CYAN}-a, --analyze <option>${RESET}\t\tAnalyze maven dependencies"
     printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t"
     printf "%b\n" "\t${GREEN}mvn-dep-list${GREEN}\t\t${RESET}Get and save to csv file list of dependencies"
+    printf "%b\n" "\t${GREEN}mvn-dep-update${GREEN}\t\t${RESET}Get and save to csv file updates of dependencies"
     printf "%b\n" ""
     printf "%b\n" " ${CYAN}-s, --scan <tool>${RESET}\t\t${RESET}Scan for vulnerabilities using the specified tool"
     printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t\t${RESET}"

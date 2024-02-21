@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # apply common functions
-source $(pwd)/scripts/utils.sh >/dev/null
+source "$(pwd)"/scripts/utils.sh >/dev/null
 
 # apply deps functions
-source $(pwd)/scripts/java_deps.sh >/dev/null
+source "$(pwd)"/scripts/java_deps.sh >/dev/null
 
 # apply tools functions
-source $(pwd)/scripts/scan_tools.sh >/dev/null
+source "$(pwd)"/scripts/scan_tools.sh >/dev/null
 
 # apply variables functions
-source $(pwd)/scripts/variables.sh >/dev/null
+source "$(pwd)"/scripts/variables.sh >/dev/null
 
 # apply func_complete functions
-source $(pwd)/scripts/func_complete.sh >/dev/null
+source "$(pwd)"/scripts/func_complete.sh >/dev/null
 #
 
 # Handle analyze command
@@ -22,7 +22,10 @@ analyze_command() {
 
     case "$option" in
         mvn-dep-list)
-            analyze_mvn_dep_list
+            analyze_mvn_dep_list "${POM_FILE_PATH}" "${TARGET_DIR_PATH}"
+            ;;
+        mvn-dep-update)
+            analyze_mvn_dep_update "${POM_FILE_PATH}" "${TARGET_DIR_PATH}"
             ;;
         *)
             echo "Invalid option: $option"
