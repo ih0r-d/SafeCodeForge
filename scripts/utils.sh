@@ -21,6 +21,10 @@ chmod_mvn_wrapper(){
   chmod 700 ./java/mvnw
 }
 
+chmod_gradle_wrapper(){
+  chmod 700 ./java/gradlew
+}
+
 build_file_name(){
   local prefix="${1:-'dep_'}"
   local extension="${2:-'txt'}"
