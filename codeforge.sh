@@ -27,6 +27,9 @@ analyze_command() {
         mvn-dep-update)
             analyze_mvn_dep_update "${POM_FILE_PATH}" "${TARGET_DIR_PATH}"
             ;;
+        gradle-deps)
+            gradle_deps "${GRADLE_FILE_PATH}" "${TARGET_DIR_PATH}"
+            ;;
         *)
             echo "Invalid option: $option"
             display_help

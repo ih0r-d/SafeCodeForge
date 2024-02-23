@@ -51,3 +51,13 @@ analyze_mvn_dep_update(){
   ./java/mvnw -f "${pom_file_path}/pom.xml" org.codehaus.mojo:versions-maven-plugin:display-dependency-updates > "$output_file_path/$file_name"
   analisys_log "$(pwd)/$output_file_path/$file_name"
 }
+
+gradle_deps(){
+  chmod_gradle_wrapper
+  local gradle_file_path="${1:-''}"
+  local output_file_path="${2:-''}"
+
+  file_name=$(build_file_name "deps" "txt")
+  ./java/gradlew -b "${gradle_file_path}/build.gradle" -q dependencies > "$output_file_path/$file_name"
+  analisys_log "$(pwd)/$output_file_path/$file_name"
+}
