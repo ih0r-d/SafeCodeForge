@@ -5,7 +5,7 @@ set -u
 
 
 # apply common functions
-source "$(pwd)"/scripts/utils.sh >/dev/null
+source "$(pwd)"/src/scripts/utils.sh >/dev/null
 
 
 # Function to handle vulnerability scanning with Snyk

@@ -5,7 +5,7 @@ set -u
 
 
 # apply common functions
-source "$(pwd)"/scripts/utils.sh >/dev/null
+source "$(pwd)"/src/scripts/utils.sh >/dev/null
 
 
 analyze_mvn_dep_list(){
@@ -31,7 +31,7 @@ analyze_mvn_dep_list(){
 
   file_name=$(build_file_name "dep_list" "csv")
 
-  ./java/mvnw -o dependency:list -f "${pom_file_path}/pom.xml" | \
+  ./src/java/mvnw -o dependency:list -f "${pom_file_path}/pom.xml" | \
   grep ":.*:.*:compile" | \
   sed -e "s/\[INFO\]    \([^:]*\):\([^:]*\):jar:\([^:]*\):compile/\1;\2;\3/" -e "s/ -- /;/" | \
   { echo "GroupId;ArtifactId;Version;Info"; cat; } | \
@@ -48,7 +48,7 @@ analyze_mvn_dep_update(){
 
   file_name=$(build_file_name "dep_updates" "txt")
 
-  ./java/mvnw -f "${pom_file_path}/pom.xml" org.codehaus.mojo:versions-maven-plugin:display-dependency-updates > "$output_file_path/$file_name"
+  ./src/java/mvnw -f "${pom_file_path}/pom.xml" org.codehaus.mojo:versions-maven-plugin:display-dependency-updates > "$output_file_path/$file_name"
   analisys_log "$(pwd)/$output_file_path/$file_name"
 }
 
@@ -58,6 +58,6 @@ gradle_deps(){
   local output_file_path="${2:-''}"
 
   file_name=$(build_file_name "deps" "txt")
-  ./java/gradlew -b "${gradle_file_path}/build.gradle" -q dependencies > "$output_file_path/$file_name"
+  ./src/java/gradlew -b "${gradle_file_path}/build.gradle" -q dependencies > "$output_file_path/$file_name"
   analisys_log "$(pwd)/$output_file_path/$file_name"
 }

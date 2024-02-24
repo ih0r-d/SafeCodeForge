@@ -18,11 +18,11 @@ UNKNOWN_MSG="Unknown command:"
 SEPARATOR_LINE="------------------------------------------------------------------------"
 
 chmod_mvn_wrapper(){
-  chmod 700 ./java/mvnw
+  chmod 700 ./src/java/mvnw
 }
 
 chmod_gradle_wrapper(){
-  chmod 700 ./java/gradlew
+  chmod 700 ./src/java/gradlew
 }
 
 build_file_name(){

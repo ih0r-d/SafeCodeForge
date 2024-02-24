@@ -1,19 +1,19 @@
 #!/bin/bash
 
 # apply common functions
-source "$(pwd)"/scripts/utils.sh >/dev/null
+source "$(pwd)"/src/scripts/utils.sh >/dev/null
 
 # apply deps functions
-source "$(pwd)"/scripts/java_deps.sh >/dev/null
+source "$(pwd)"/src/scripts/java_deps.sh >/dev/null
 
 # apply tools functions
-source "$(pwd)"/scripts/scan_tools.sh >/dev/null
+source "$(pwd)"/src/scripts/scan_tools.sh >/dev/null
 
 # apply variables functions
-source "$(pwd)"/scripts/variables.sh >/dev/null
+source "$(pwd)"/src/scripts/variables.sh >/dev/null
 
 # apply func_complete functions
-source "$(pwd)"/scripts/func_complete.sh >/dev/null
+source "$(pwd)"/src/scripts/func_complete.sh >/dev/null
 #
 
 # Handle analyze command
