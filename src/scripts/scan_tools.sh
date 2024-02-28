@@ -20,8 +20,8 @@ scan_with_owasp() {
     # Add your logic here
 }
 
-# Function to handle vulnerability scanning with Black Duck
-scan_with_blackduck() {
-    echo "Scanning for vulnerabilities with Black Duck..."
-    # Add your logic here
-}
+## Function to handle vulnerability scanning with Black Duck
+#scan_with_blackduck() {
+#    echo "Scanning for vulnerabilities with Black Duck..."
+#    # Add your logic here
+#}
