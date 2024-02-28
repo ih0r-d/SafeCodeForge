@@ -46,7 +46,7 @@ scan_command() {
             scan_with_snyk
             ;;
         owasp)
-            scan_with_owasp
+            scan_with_owasp "${POM_FILE_PATH}" "${TARGET_DIR_PATH}" "${OWASP_OUT_FORMAT}"
             ;;
         blackduck)
             scan_with_blackduck

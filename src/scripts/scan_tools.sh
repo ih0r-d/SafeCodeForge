@@ -16,7 +16,27 @@ scan_with_snyk() {
 
 # Function to handle vulnerability scanning with OWASP Dependency-Check
 scan_with_owasp() {
-    echo "Scanning for vulnerabilities with OWASP Dependency-Check..."
+# fixme: optimize func
+  echo "Scanning for vulnerabilities with OWASP Dependency-Check..."
+  chmod_mvn_wrapper
+  local pom_file_path="${1:-''}"
+  local output_file_path="${2:-''}"
+  local output_format="${3:-'json'}"
+
+  file_name=''
+  if [[ output_format == 'json' ]] then
+    file_name=$(build_file_name "owasp_report" 'json')
+  else
+    file_name=$(build_file_name "owasp_report" 'csv')
+  fi
+
+  ./src/java/mvnw -q -f "${pom_file_path}/pom.xml" \
+  -Dformats=JSON -Dodc.outputDirectory=$pom_file_path/target -DscanDirectory=src/main/java \
+  org.owasp:dependency-check-maven:7.1.1:check
+
+  mv "$pom_file_path"/target/dependency-check-report.json "$(pwd)/$output_file_path/$file_name"
+  analisys_log "$(pwd)/$output_file_path/$file_name"
+
     # Add your logic here
 }
 
