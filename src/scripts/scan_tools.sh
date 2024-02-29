@@ -16,7 +16,6 @@ scan_with_snyk() {
 
 # Function to handle vulnerability scanning with OWASP Dependency-Check
 scan_with_owasp() {
-# fixme: optimize func
   echo "Scanning for vulnerabilities with OWASP Dependency-Check..."
   chmod_mvn_wrapper
   local pom_file_path="${1:-''}"
@@ -24,20 +23,35 @@ scan_with_owasp() {
   local output_format="${3:-'json'}"
 
   file_name=''
-  if [[ output_format == 'json' ]] then
-    file_name=$(build_file_name "owasp_report" 'json')
-  else
-    file_name=$(build_file_name "owasp_report" 'csv')
+  mvn_opts=''
+  source_file=''
+
+  if [ ! -d "${output_file_path}" ]; then
+      mkdir -p "${output_file_path}"
   fi
 
-  ./src/java/mvnw -q -f "${pom_file_path}/pom.xml" \
-  -Dformats=JSON -Dodc.outputDirectory=$pom_file_path/target -DscanDirectory=src/main/java \
-  org.owasp:dependency-check-maven:7.1.1:check
+  if [[ output_format == 'json' ]]; then
+    file_name=$(build_file_name "owasp_report" 'json')
+    mvn_opts="-Dformats=JSON -Dodc.outputDirectory=$pom_file_path/target -DscanDirectory=src/main/java"
+    source_file="dependency-check-report.json"
+  else
+    file_name=$(build_file_name "owasp_report" 'csv')
+    mvn_opts="-Dformats=CSV -Dodc.outputDirectory=$pom_file_path/target -DscanDirectory=src/main/java"
+    source_file="dependency-check-report.csv"
+  fi
 
-  mv "$pom_file_path"/target/dependency-check-report.json "$(pwd)/$output_file_path/$file_name"
+
+  ./src/java/mvnw -q -f "${pom_file_path}/pom.xml" $mvn_opts org.owasp:dependency-check-maven:7.1.1:check
+  mv "$pom_file_path"/target/$source_file "$(pwd)/$output_file_path/$file_name"
+
+  if which csvtool; then
+  	cat "$(pwd)/$output_file_path/$file_name" \
+  		| csvtool cols '3,7,8,10-' - \
+  		| sponge "$(pwd)/$output_file_path/$file_name"
+  fi
+
   analisys_log "$(pwd)/$output_file_path/$file_name"
 
-    # Add your logic here
 }
 
 ## Function to handle vulnerability scanning with Black Duck

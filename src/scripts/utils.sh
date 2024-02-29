@@ -88,7 +88,7 @@ display_help() {
     printf "%b\n" " ${CYAN}-s, --scan <tool>${RESET}\t\t${RESET}Scan for vulnerabilities using the specified tool"
     printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t\t${RESET}"
     printf "%b\n" "\t${GREEN}snyk${GREEN}\t\t\t${RESET}Use Snyk for vulnerability scanning"
-    printf "%b\n" "\t${GREEN}owasp${GREEN}\t\t\t${RESET}Use OWASP Dependency-Check for vulnerability scanning"
+    printf "%b\n" "\t${GREEN}owasp${GREEN}\t\t\t${RESET}Use OWASP Dependency-Check for vulnerability scanning. Supported JSON,CSV output formats"
 #    printf "%b\n" "\t${GREEN}blackduck${GREEN}\t\t${RESET}Use Black Duck for vulnerability scanning"
     printf "%b\n" ""
     printf "%b\n" "  ${CYAN}-h, --help${RESET}\t\t\tDisplay help"
