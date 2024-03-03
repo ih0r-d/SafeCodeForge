@@ -49,7 +49,7 @@ scan_command() {
 
     case "$tool" in
         snyk)
-            scan_with_snyk
+            scan_with_snyk "${POM_FILE_PATH}" "${SNYK_TOKEN}" "$(pwd)/target/reports/"
             ;;
         owasp)
             scan_with_owasp "${POM_FILE_PATH}" "${TARGET_DIR_PATH}" "${OWASP_OUT_FORMAT}"
