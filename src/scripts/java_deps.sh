@@ -64,6 +64,20 @@ mvn_dep_bom(){
   mv "${pom_file_path}/target/bom.*" "$target_dir"
 }
 
+mvn_dep_tree(){
+  local pom_file_path="$1"
+  local target_dir="$2"
+  target_file=$(build_file_name "tree" "txt")
+
+
+  if [ ! -d "$target_dir" ]; then
+      mkdir -p "$target_dir"
+  fi
+
+    ./src/java/mvnw -f "${pom_file_path}/pom.xml" -DoutputFile="$target_dir/$target_file" \
+    org.apache.maven.plugins:maven-dependency-plugin:3.3.0:tree
+}
+
 
 gradle_deps(){
   chmod_gradle_wrapper

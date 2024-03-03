@@ -28,7 +28,10 @@ analyze_command() {
             analyze_mvn_dep_update "${POM_FILE_PATH}" "${TARGET_DIR_PATH}"
             ;;
         mvn-dep-bom)
-            dep_bom "$(pwd)/target/deps/bom"
+            mvn_dep_bom "${POM_FILE_PATH}" "$(pwd)/target/deps/bom"
+            ;;
+        mvn-dep-tree)
+            mvn_dep_tree "${POM_FILE_PATH}" "$(pwd)/target/deps/"
             ;;
         gradle-deps)
             gradle_deps "${GRADLE_FILE_PATH}" "${TARGET_DIR_PATH}"
