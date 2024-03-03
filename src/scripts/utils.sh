@@ -83,6 +83,7 @@ display_help() {
     printf "%b\n" "    ${CYAN}${BOLD}Options:${RESET}\t"
     printf "%b\n" "\t${GREEN}mvn-dep-list${GREEN}\t\t${RESET}Use for analyze list dependencies in maven project"
     printf "%b\n" "\t${GREEN}mvn-dep-update${GREEN}\t\t${RESET}Use for analyze dependencies updates in maven project"
+    printf "%b\n" "\t${GREEN}dep-bom${RESET}\t\t\tUse ${BLUE}cyclonedx plugin ${RESET} to make aggregation bom of dependencies"
     printf "%b\n" "\t${GREEN}gradle-deps${GREEN}\t\t${RESET}Use for analyze list dependencies in gradle project"
     printf "%b\n" ""
     printf "%b\n" " ${CYAN}-s, --scan <tool>${RESET}\t\t${RESET}Scan for vulnerabilities using the specified tool"

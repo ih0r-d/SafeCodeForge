@@ -52,6 +52,19 @@ analyze_mvn_dep_update(){
   analisys_log "$(pwd)/$output_file_path/$file_name"
 }
 
+mvn_dep_bom(){
+  local pom_file_path="$1"
+  local target_dir="$2"
+
+  if [ ! -d "$target_dir" ]; then
+      mkdir -p "$target_dir"
+  fi
+
+  ./src/java/mvnw -f "${pom_file_path}/pom.xml" org.cyclonedx:cyclonedx-maven-plugin:2.6.2:makeAggregateBom
+  mv "${pom_file_path}/target/bom.*" "$target_dir"
+}
+
+
 gradle_deps(){
   chmod_gradle_wrapper
   local gradle_file_path="${1:-''}"
