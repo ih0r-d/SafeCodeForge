@@ -10,8 +10,26 @@ source "$(pwd)"/src/scripts/utils.sh >/dev/null
 
 # Function to handle vulnerability scanning with Snyk
 scan_with_snyk() {
-    echo "Scanning for vulnerabilities with Snyk..."
-    # Add your logic here
+  chmod_mvn_wrapper
+  local pom_file_path="$1"
+  local snyk_token="$2"
+  local target_dir="$3"
+  # this check is useless per se, but this has a more descriptive message rather than the one given by the plugin
+  if test -z "$snyk_token"; then
+  	log "ERROR" 'Not present SNYK_TOKEN'
+  	exit 1
+  fi
+
+  if [ ! -d "$target_dir" ]; then
+    mkdir -p "$target_dir"
+  fi
+
+  target_file=$(build_file_name "snyk_report" 'log')
+
+
+  # run the plugin, note that the plugin can only take the API token from pom.xml, not by using user properties
+  ./src/java/mvnw -f "${pom_file_path}/pom.xml" io.snyk:snyk-maven-plugin:2.1.1:test | tee "$target_dir/$target_file"
+
 }
 
 # Function to handle vulnerability scanning with OWASP Dependency-Check
