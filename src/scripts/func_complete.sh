@@ -13,21 +13,22 @@ complete_command() {
     local cur="${COMP_WORDS[COMP_CWORD]}"
     case "$COMP_CWORD" in
     1)
-        COMPREPLY=($(compgen -W "${commands[*]}" -- "$cur"))
+        complete_reply=("$(compgen -W "${commands[*]}" -- "$cur")")
         ;;
     2)
         case "${COMP_WORDS[1]}" in
         "analyze")
-            COMPREPLY=($(compgen -W "${analyze_options[*]}" -- "$cur"))
+            complete_reply=("$(compgen -W "${analyze_options[*]}" -- "$cur")")
             ;;
         "scan")
-            COMPREPLY=($(compgen -W "${scan_options[*]}" -- "$cur"))
+            complete_reply=("$(compgen -W "${scan_options[*]}" -- "$cur")")
             ;;
         *) ;;
         esac
         ;;
     *)
-        COMPREPLY=()
+      complete_reply=()
+      while IFS='' read -r line; do complete_reply+=("$line"); done < <()
         ;;
     esac
 }
